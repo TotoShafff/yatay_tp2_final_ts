@@ -6,7 +6,7 @@ module.exports = {
   
   // Db
   DB_PROVIDER: process.env.DB_PROVIDER || 'mongo',
-  MONGODB_URI: process.env.MONGODB_URI,
+  MONGODB_URL: process.env.MONGODB_URL,
   
   // Seguridad y claves
   API_KEY: process.env.API_KEY,
