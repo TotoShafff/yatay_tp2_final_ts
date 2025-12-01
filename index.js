@@ -6,7 +6,7 @@ const config = require('./config');
 connectDB();
 
 app.listen(config.PORT, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${config.PORT}`);
-  console.log(`📊 Entorno: ${config.NODE_ENV}`);
-  console.log(`💾 Base de datos: ${config.DB_PROVIDER}`);
+  console.log(`Servidor corriendo en http://localhost:${config.PORT}`);
+  console.log(`Entorno: ${config.NODE_ENV}`);
+  console.log(`Base de datos: ${config.DB_PROVIDER}`);
 });
