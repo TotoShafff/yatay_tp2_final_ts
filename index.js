@@ -1,10 +1,12 @@
 require('dotenv').config();
 const app = require('./app');
+const connectDB = require('./database/conexiones/mongoConnection');
+const config = require('./config');
 
-const PORT = process.env.PORT || 3000;
+connectDB();
 
-app.listen(PORT, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📊 Entorno: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`💾 Base de datos: ${process.env.DB_PROVIDER || 'mongo'}`);
+app.listen(config.PORT, () => {
+  console.log(`✅ Servidor corriendo en http://localhost:${config.PORT}`);
+  console.log(`📊 Entorno: ${config.NODE_ENV}`);
+  console.log(`💾 Base de datos: ${config.DB_PROVIDER}`);
 });

@@ -1,7 +1,7 @@
 {
   "name": "tp2-stock-api",
   "version": "1.0.0",
-  "description": "API RESTful para gestión de productos (stock) - TP2 ORT",
+  "description": "API para gestión de productos - TP2 ORT",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
