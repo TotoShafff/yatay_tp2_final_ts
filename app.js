@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const productoRoutes = require('./routes/productoRoutes');
+const albumsService = require('./services/albumsService');
 
 const app = express();
 
@@ -8,15 +9,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'OK', 
-    message: 'API funcionando correctamente',
-    timestamp: new Date().toISOString()
-  });
-});
-
 app.use('/api/v1/productos', productoRoutes);
+
+app.get('/api/v1/albums/csv', async (req, res) => {
+  try {
+    const csv = await albumsService.generarCSV();
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=albums_15.csv');
+    res.status(200).send(csv);
+  } catch (error) {
+    res.status(500).json({ 
+      statusCode: 500, 
+      error: error.message 
+    });
+  }
+});
 
 app.use('*', (req, res) => {
   res.status(404).json({

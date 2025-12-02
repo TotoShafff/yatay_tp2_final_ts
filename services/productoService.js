@@ -34,6 +34,12 @@ class ProductoService {
   }
 
   async obtenerProductoPorId(id) {
+    const mongoose = require('mongoose');
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw { statusCode: 400, error: 'ID de producto inválido' };
+    }
+
     const producto = await productoRepository.findById(id);
     
     if (!producto) {
@@ -44,6 +50,12 @@ class ProductoService {
   }
 
   async actualizarProducto(id, productoData) {
+    const mongoose = require('mongoose');
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw { statusCode: 400, error: 'ID de producto inválido' };
+    }
+
     const productoExistente = await productoRepository.findById(id);
     
     if (!productoExistente) {
@@ -71,6 +83,12 @@ class ProductoService {
   }
 
   async eliminarProducto(id) {
+    const mongoose = require('mongoose');
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw { statusCode: 400, error: 'ID de producto inválido' };
+    }
+
     const producto = await productoRepository.findById(id);
     
     if (!producto) {

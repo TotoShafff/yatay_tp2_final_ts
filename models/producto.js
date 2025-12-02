@@ -23,7 +23,6 @@ const productoSchema = new mongoose.Schema({
     default: () => new Date().toISOString().split('T')[0]
   }
 }, {
-  timestamps: true,
   versionKey: false
 });
 
@@ -31,8 +30,6 @@ productoSchema.set('toJSON', {
   transform: (doc, ret) => {
     ret.id = ret._id.toString();
     delete ret._id;
-    delete ret.createdAt;
-    delete ret.updatedAt;
     return ret;
   }
 });

@@ -1,0 +1,191 @@
+@baseUrl = http://localhost:3000
+@apiKey = apikey123456
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdEBleGFtcGxlLmNvbSIsImlhdCI6MTc2NDYzMzgzOCwiZXhwIjoxNzY0NzIwMjM4fQ.txLjwFQHnjdS6AYj9nmAc8mio4PhBUuMbuKtxw6cHX4
+
+# PRODUCTOS - CRUD
+
+# 1) Crear producto
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "producto": "RX 9070 XT Sapphire Pure",
+  "stockAmount": 8
+}
+
+###
+
+# 2) Crear otro producto
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "producto": "Mouse Logitech",
+  "stockAmount": 50,
+  "fechaIngreso": "2025-11-15"
+}
+
+###
+
+# 3) Listar todos los productos
+GET {{baseUrl}}/api/v1/productos
+
+###
+
+# 4) Obtener producto por ID (reemplazar con el ID que se muestra en la respuesta de la lista de productos)
+GET {{baseUrl}}/api/v1/productos/692e29788a98902a695b301a
+
+###
+
+# 5) ERROR: Actualizar producto sin autenticación
+PUT {{baseUrl}}/api/v1/productos/692e29788a98902a695b301a
+Content-Type: application/json
+
+{
+  "stockAmount": 15
+}
+
+###
+
+# 6) Actualizar producto con x-api-key
+PUT {{baseUrl}}/api/v1/productos/692e2e862324f0e099f81617
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "producto": "RX 9070 XT Sapphire Pure (actualizado)",
+  "stockAmount": 6
+}
+
+###
+
+# 7) Actualizar solo el stock con x-api-key
+PUT {{baseUrl}}/api/v1/productos/692e29788a98902a695b301a
+Content-Type: application/json
+x-api-key: {{apiKey}}
+
+{
+  "stockAmount": 25
+}
+
+###
+
+# 8) ERROR: Eliminar producto sin autenticación
+DELETE {{baseUrl}}/api/v1/productos/692e29788a98902a695b301a
+
+###
+
+# 9) Eliminar producto con x-api-key
+DELETE {{baseUrl}}/api/v1/productos/692e29788a98902a695b301a
+x-api-key: {{apiKey}}
+
+###
+
+# PRODUCTOS - VALIDACIONES Y ERRORES
+
+# 10) ERROR: Crear producto sin nombre
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "stockAmount": 10
+}
+
+###
+
+# 11) ERROR: Crear producto con nombre vacío
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "producto": "",
+  "stockAmount": 10
+}
+
+###
+
+# 12) ERROR: Crear producto sin stock
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "producto": "Test Product"
+}
+
+###
+
+# 13) ERROR: Crear producto con stock negativo
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "producto": "Test Product",
+  "stockAmount": -5
+}
+
+###
+
+# 14) ERROR: Crear producto con stock decimal
+POST {{baseUrl}}/api/v1/productos
+Content-Type: application/json
+
+{
+  "producto": "Test Product",
+  "stockAmount": 10.5
+}
+
+###
+
+# 15) ERROR: Obtener producto con ID inválido
+GET {{baseUrl}}/api/v1/productos/692e29788a98902a695b301aaaaaaTestIDinvalido
+
+###
+
+# 16) ERROR: Actualizar con API key incorrecta
+PUT {{baseUrl}}/api/v1/productos/674c8f1234567890abcdef12
+Content-Type: application/json
+x-api-key: clave-incorrecta
+
+{
+  "stockAmount": 100
+}
+
+###
+
+# AUTENTICACIÓN CON JWT
+
+# 17) Actualizar producto con JWT Bearer Token
+# Para generar un token JWT de prueba:
+# https://jwt.io/
+# Payload: { "userId": 1 }
+# Secret: jwtsecret123456
+
+PUT {{baseUrl}}/api/v1/productos/692e2aaf8a98902a695b3023
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "stockAmount": 100
+}
+
+###
+
+# 18) Eliminar producto con JWT Bearer Token
+DELETE {{baseUrl}}/api/v1/productos/692e2aaf8a98902a695b3023
+Authorization: Bearer {{token}}
+
+###
+
+# ALBUMS - CSV
+
+# 19) Generar y descargar CSV de albums
+GET {{baseUrl}}/api/v1/albums/csv
+
+###
+
+# RUTA NO ENCONTRADA
+
+# 20) ERROR: Ruta inexistente
+GET {{baseUrl}}/api/v1/ruta-inexistente
+
+###
